@@ -35,8 +35,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun MyApp(init: Boolean = true) {
-    var shouldShowOnboading by rememberSaveable { mutableStateOf(init) }
+private fun MyApp() {
+    var shouldShowOnboading by rememberSaveable { mutableStateOf(true) }
 
     if (shouldShowOnboading) {
         OnboardingScreen(onContinueClicked = { shouldShowOnboading = false })
@@ -131,6 +131,6 @@ private fun OnboardPreview() {
 @Composable
 private fun DefaultPreview() {
     BasicTheme {
-        MyApp(false)
+        Greetings()
     }
 }
