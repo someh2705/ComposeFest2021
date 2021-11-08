@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -37,13 +39,49 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun LayoutCodeLab() {
+    Scaffold(
+        topBar = {
+            TopAppBar(title = {
+                Text(text = "LayoutCodeLab")
+            },
+                actions = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Filled.Favorite, contentDescription = null)
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        BodyContent(modifier = Modifier.padding(innerPadding).padding(8.dp))
+    }
+}
+
+@Composable
+fun BodyContent(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
+        Text(text = "Hi there!")
+        Text(text = "Thanks for going through the Layouts codelab")
+    }
+}
+
+@Preview
+@Composable
+fun LayoutCodeLabPreview() {
+    LayoutTheme {
+        LayoutCodeLab()
+    }
+}
+
+
+@Composable
 fun PhotographerCard(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .padding(8.dp)
             .clip(RoundedCornerShape(4.dp))
             .background(MaterialTheme.colors.surface)
-            .clickable {  }
+            .clickable { }
             .padding(16.dp)
     ) {
         Surface(
