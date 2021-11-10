@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -66,9 +67,11 @@ fun LayoutCodeLab() {
 
 @Composable
 fun BodyContent(modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
-        Text(text = "Hi there!")
-        Text(text = "Thanks for going through the Layouts codelab")
+    MyOwnColumn(modifier = Modifier.padding(8.dp)) {
+        Text(text = "My own column")
+        Text(text = "places items")
+        Text(text = "vertically.")
+        Text(text = "We've done it by hand!")
     }
 }
 
@@ -184,7 +187,6 @@ fun Modifier.firstBaselineToTop(
             placeable.placeRelative(0, placeableY)
         }
     }
-
 )
 
 @Preview
@@ -201,5 +203,38 @@ fun TextWithNormalPaddingPreview() {
     LayoutTheme {
         Text(text = "Hi there!", Modifier.padding(top = 32.dp))
 
+    }
+}
+
+@Composable
+fun MyOwnColumn(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Layout(
+        modifier = modifier,
+        content = content
+    ) { measurables, constraints ->
+        val placeables = measurables.map { measurable ->
+            measurable.measure(constraints)
+        }
+
+        var yPosition = 0
+
+        layout(constraints.maxWidth, constraints.maxHeight) {
+            placeables.forEach { placeable ->
+                placeable.placeRelative(x = 0, y = yPosition)
+
+                yPosition += placeable.height
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun BodyContentPreview() {
+    LayoutTheme {
+        BodyContent()
     }
 }
