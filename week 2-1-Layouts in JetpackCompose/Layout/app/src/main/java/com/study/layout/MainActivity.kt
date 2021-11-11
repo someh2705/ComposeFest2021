@@ -3,10 +3,7 @@ package com.study.layout
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -33,6 +30,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.study.layout.ui.theme.LayoutTheme
 import kotlinx.coroutines.launch
+
+val topics = listOf(
+    "Arts & Crafts", "Beauty", "Books", "Business", "Comics", "Culinary",
+    "Design", "Fashion", "Film", "History", "Maths", "Music", "People", "Philosophy",
+    "Religion", "Social sciences", "Technology", "TV", "Writing"
+)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,17 +66,16 @@ fun LayoutCodeLab() {
             )
         }
     ) {
-        ScrollingList()
+        BodyContent()
     }
 }
 
 @Composable
 fun BodyContent(modifier: Modifier = Modifier) {
-    MyOwnColumn(modifier = Modifier.padding(8.dp)) {
-        Text(text = "My own column")
-        Text(text = "places items")
-        Text(text = "vertically.")
-        Text(text = "We've done it by hand!")
+    StaggeredGrid(modifier = modifier.horizontalScroll(rememberScrollState()), rows = 5) {
+        for (topic in topics) {
+            Chip(modifier = Modifier.padding(8.dp), text = topic)
+        }
     }
 }
 
