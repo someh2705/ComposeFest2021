@@ -344,3 +344,9 @@ private class PaddingModifier(
         }
     }
 }
+
+@Stable
+fun Modifier.padding(all: Dp) =
+    this.then(
+        PaddingModifier(start = all, top = all, end = all, bottom = all, rtlAware = true)
+    )
