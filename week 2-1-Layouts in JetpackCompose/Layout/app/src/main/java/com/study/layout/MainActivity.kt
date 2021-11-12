@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,18 +62,27 @@ fun LayoutCodeLab() {
                 }
             )
         }
-    ) {
-        BodyContent()
+    ) { innerPadding ->
+        BodyContent(modifier = Modifier.padding(innerPadding))
     }
 }
 
 @Composable
 fun BodyContent(modifier: Modifier = Modifier) {
-    StaggeredGrid(modifier = modifier.horizontalScroll(rememberScrollState()), rows = 5) {
-        for (topic in topics) {
-            Chip(modifier = Modifier.padding(8.dp), text = topic)
+    Row(
+        modifier = modifier
+            .background(color = Color.LightGray)
+            .padding(16.dp)
+            .size(200.dp)
+            .horizontalScroll(rememberScrollState()),
+        content = {
+            StaggeredGrid {
+                for (topic in topics) {
+                    Chip(modifier = Modifier.padding(8.dp), text = topic)
+                }
+            }
         }
-    }
+    )
 }
 
 @Composable
