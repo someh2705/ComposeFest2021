@@ -24,6 +24,7 @@ import androidx.compose.ui.layout.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
+import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
 import com.study.layout.ui.theme.LayoutTheme
 import kotlinx.coroutines.launch
@@ -360,3 +361,31 @@ fun Modifier.padding(all: Dp) =
     this.then(
         PaddingModifier(start = all, top = all, end = all, bottom = all, rtlAware = true)
     )
+
+@Composable
+fun ConstraintLayoutContent() {
+    ConstraintLayout {
+        val (button, text) = createRefs()
+
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.constrainAs(button) {
+                top.linkTo(parent.top, margin = 16.dp)
+            }
+        ) {
+            Text(text = "Button")
+        }
+
+        Text(text = "Text", Modifier.constrainAs(text) {
+            top.linkTo(button.bottom, margin = 16.dp)
+        })
+    }
+}
+
+@Preview
+@Composable
+fun ConstraintLayoutContentPreview() {
+    LayoutTheme {
+        ConstraintLayoutContent()
+    }
+}
