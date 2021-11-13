@@ -401,3 +401,26 @@ fun ConstraintLayoutContentPreview() {
         ConstraintLayoutContent()
     }
 }
+
+@Composable
+fun LargeConstraintLayout() {
+    ConstraintLayout {
+        val text = createRef()
+
+        val guideline = createGuidelineFromStart(fraction = 0.5f)
+        Text(
+            "This is a very very very very very very very long text",
+            Modifier.constrainAs(text) {
+                linkTo(start = guideline, end = parent.end)
+            }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun LargeConstraintLayoutPreview() {
+    LayoutTheme {
+        LargeConstraintLayout()
+    }
+}
