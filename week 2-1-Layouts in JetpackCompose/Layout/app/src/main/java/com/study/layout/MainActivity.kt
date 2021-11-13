@@ -25,6 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
 import coil.compose.rememberImagePainter
 import com.study.layout.ui.theme.LayoutTheme
 import kotlinx.coroutines.launch
@@ -412,6 +414,7 @@ fun LargeConstraintLayout() {
             "This is a very very very very very very very long text",
             Modifier.constrainAs(text) {
                 linkTo(start = guideline, end = parent.end)
+                width = Dimension.preferredWrapContent
             }
         )
     }
@@ -422,5 +425,51 @@ fun LargeConstraintLayout() {
 fun LargeConstraintLayoutPreview() {
     LayoutTheme {
         LargeConstraintLayout()
+    }
+}
+
+@Composable
+fun DecoupledConstraintLayout() {
+    BoxWithConstraints {
+        val constraints = if (maxWidth < maxHeight) {
+            decoupledConstraints(margin = 16.dp)
+        } else {
+            decoupledConstraints(margin = 32.dp)
+        }
+
+        ConstraintLayout(constraintSet = constraints) {
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier.layoutId("button")
+            ) {
+                Text(text = "Button")
+            }
+            
+            Text(text = "Text", modifier = Modifier.layoutId("text"))
+        }
+
+    }
+}
+
+@Preview
+@Composable
+fun DecoupledConstraintLayoutPreview() {
+    LayoutTheme {
+        DecoupledConstraintLayout()
+    }
+}
+
+private fun decoupledConstraints(margin: Dp): ConstraintSet {
+    return ConstraintSet {
+        val button = createRefFor("button")
+        val text = createRefFor("text")
+
+        constrain(button) {
+            top.linkTo(parent.top, margin = margin)
+        }
+        constrain(text) {
+            top.linkTo(button.bottom, margin = margin)
+            centerHorizontallyTo(parent)
+        }
     }
 }
