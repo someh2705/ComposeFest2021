@@ -28,7 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -137,6 +136,25 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
         setIcon(TodoIcon.Default)
         setText("")
     }
+    TodoItemInput(
+        text = text,
+        onTextChange = setText,
+        submit = submit,
+        iconsVisible = iconsVisible,
+        icon = icon,
+        onIconChange = setIcon
+    )
+}
+
+@Composable
+fun TodoItemInput(
+    text: String,
+    onTextChange: (String) -> Unit,
+    submit: () -> Unit,
+    iconsVisible: Boolean,
+    icon: TodoIcon,
+    onIconChange: (TodoIcon) -> Unit
+) {
     Column {
         Row(
             modifier = Modifier
@@ -145,7 +163,7 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
         ) {
             TodoInputTextField(
                 text = text,
-                onTextChange = setText,
+                onTextChange = onTextChange,
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp),
@@ -161,7 +179,7 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
         if (iconsVisible) {
             AnimatedIconRow(
                 icon = icon,
-                onIconChange = setIcon,
+                onIconChange = onIconChange,
                 modifier = Modifier.padding(top = 8.dp)
             )
         } else {
