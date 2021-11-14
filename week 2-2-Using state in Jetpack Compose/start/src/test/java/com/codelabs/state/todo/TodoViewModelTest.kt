@@ -34,4 +34,14 @@ class TodoViewModelTest {
 
         assertThat(viewModel.todoItems).isEqualTo(listOf(item2))
     }
+
+    @Test
+    fun `when add item updates list`() {
+        val viewModel = TodoViewModel()
+        val item = generateRandomTodoItem()
+
+        viewModel.addItem(item)
+
+        assertThat(viewModel.todoItems).isEqualTo(listOf(item))
+    }
 }
