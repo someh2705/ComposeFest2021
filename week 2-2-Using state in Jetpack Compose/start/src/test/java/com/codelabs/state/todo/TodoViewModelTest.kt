@@ -27,6 +27,9 @@ class TodoViewModelTest {
         val item1 = generateRandomTodoItem()
         val item2 = generateRandomTodoItem()
 
+        viewModel.addItem(item1)
+        viewModel.addItem(item2)
+
         viewModel.removeItem(item1)
 
         assertThat(viewModel.todoItems).isEqualTo(listOf(item2))
