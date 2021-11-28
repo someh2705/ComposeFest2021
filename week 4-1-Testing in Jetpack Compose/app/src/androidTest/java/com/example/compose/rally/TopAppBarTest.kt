@@ -3,6 +3,7 @@ package com.example.compose.rally
 import android.util.Log
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.text.toUpperCase
 import com.example.compose.rally.ui.components.RallyTopAppBar
 import com.example.compose.rally.ui.overview.OverviewBody
 import org.junit.Rule
@@ -60,5 +61,36 @@ class TopAppBarTest {
         composeTestRule
             .onNodeWithText("Alerts")
             .assertIsDisplayed()
+    }
+
+    @Test
+    fun optional_exercise() {
+        composeTestRule.setContent {
+            RallyApp()
+        }
+
+        composeTestRule
+            .onNodeWithContentDescription(RallyScreen.Bills.name)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithContentDescription(RallyScreen.Bills.name)
+            .assertIsSelected()
+
+        composeTestRule
+            .onNodeWithContentDescription(RallyScreen.Accounts.name)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithContentDescription(RallyScreen.Accounts.name)
+            .assertIsSelected()
+
+        composeTestRule
+            .onNodeWithContentDescription(RallyScreen.Overview.name)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithContentDescription(RallyScreen.Overview.name)
+            .assertIsSelected()
     }
 }

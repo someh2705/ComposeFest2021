@@ -65,7 +65,7 @@ fun RallyTopAppBar(
                     text = screen.name,
                     icon = screen.icon,
                     onSelected = { onTabSelected(screen) },
-                    selected = currentScreen == screen
+                    selected = currentScreen == screen,
                 )
             }
         }
@@ -94,7 +94,6 @@ private fun RallyTab(
     )
     Row(
         modifier = Modifier
-            .clearAndSetSemantics { contentDescription = text }
             .padding(16.dp)
             .animateContentSize()
             .height(TabHeight)
